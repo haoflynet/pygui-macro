@@ -5,24 +5,25 @@
 if语句、while语句
 """
 import os
-import sys
 import argparse
-import platform
 
 from listener import listen
+from callbacks import get_scripts
 
 
-def write():
-    """
-    写入脚本文件
-    :return:
-    """
-    device_info = 'DEVICE: {} {}'.format(
-        platform.system(), platform.release()
-    )
-    screen_info = 'SCREEN_SIZE: {}'.format(
-        ''  # 我擦，这个都跟系统有关
-    )
+scripts = ['tst']
+
+# def write():
+#     """
+#     写入脚本文件
+#     :return:
+#     """
+#     device_info = 'DEVICE: {} {}'.format(
+#         platform.system(), platform.release()
+#     )
+#     screen_info = 'SCREEN_SIZE: {}'.format(
+#         ''  # 我擦，这个都跟系统有关
+#     )
 
 
 def record(start_key, end_key, exclude_events, destination, file, is_continue):
@@ -33,10 +34,11 @@ def record(start_key, end_key, exclude_events, destination, file, is_continue):
     file = 'script' if file is None else file
     if not os.path.isdir(destination):
         print('destination not exists')
-        exit(0)
     is_continue = False if is_continue is None else is_continue
 
-    listener.listen(exclude_events)
+    listen(exclude_events)
+    print(get_scripts())
+
 
 
 def run(start_key, end_key, file):
@@ -45,8 +47,8 @@ def run(start_key, end_key, file):
 
 
 def main():
-    # TODO: Mac/Linux必须有root权限
     parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--version', help='打印版本信息')
     subparsers = parser.add_subparsers(dest='subparser')
 
     parser_record = subparsers.add_parser('record', help='记录脚本')
@@ -63,7 +65,16 @@ def main():
     parser_run.add_argument('-f', '--file', dest='file', help='指定脚本文件执行 (default: script)')
 
     kwargs = vars(parser.parse_args())
-    globals()[kwargs.pop('subparser')](**kwargs)
+    command = kwargs.pop('subparser')
+    if command is None:
+        parser.print_help()
+        parser.exit()
+    else:
+        if os.geteuid() != 0:
+            print('You must have the root privileges.')
+            parser.exit()
+        kwargs.pop('version')
+        globals()[command](**kwargs)
 
 
 if __name__ == '__main__':
