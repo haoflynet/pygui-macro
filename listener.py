@@ -27,3 +27,7 @@ def listen(exclude_events=None):
         with mouse.Listener(**mouse_events) as mouse_listener:
             keyboard_listener.join()
             mouse_listener.join()
+
+
+if __name__ == '__main__':
+    pass
