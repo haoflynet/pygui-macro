@@ -1,3 +1,5 @@
+import runner
+
 from pynput import keyboard, mouse
 
 
@@ -6,7 +8,8 @@ mouse_controller = mouse.Controller()
 
 
 def mouse_move(x, y):
-    mouse_controller.position = (float(x), int(y))
+    _x, _y = runner.get_original()
+    mouse_controller.position = (_x + float(x), _y + int(y))
 
 
 def mouse_click(button, count=1):
