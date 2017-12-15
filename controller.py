@@ -1,15 +1,16 @@
-from pynput import keyboard
+from pynput import keyboard, mouse
 
 
 keyboard_controller = keyboard.Controller()
+mouse_controller = mouse.Controller()
 
 
 def mouse_move(x, y):
-    pass
+    mouse_controller.position = (float(x), int(y))
 
 
-def mouse_click(x, y, button, pressed):
-    pass
+def mouse_click(button, count=1):
+    mouse_controller.click(mouse.Button.__dict__[button], count)
 
 
 def mouse_scroll(x, y, dx, dy):
