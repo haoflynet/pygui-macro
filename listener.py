@@ -1,41 +1,41 @@
-"""
-监听器，默认监听所有事件，可以通过参数指定需要排除的事件
-"""
+
 from pynput import keyboard, mouse
 
-import callbacks
-
-mouse_events = {
-    'on_move': callbacks.on_mouse_move,
-    'on_click': callbacks.on_mouse_click,
-    'on_scroll': callbacks.on_mouse_scroll
-}
-
-keyboard_events = {
-    'on_press': callbacks.on_key_press,
-    'on_release': callbacks.on_key_release
-}
+# import callbacks
+from callbacks import Callbacks
 
 
 class StopException(Exception):
     pass
 
 
-def listen(exclude_events=None):
-    for exclude_event in exclude_events:
-        if exclude_event in mouse_events:
-            del mouse_events[exclude_event]
-        if exclude_event in keyboard_events:
-            del keyboard_events[exclude_event]
+class Listener:
+    """
+    根据不同的监听组件启用不同的监听方式
+    """
+    mouse_events = {
+        'on_move': Callbacks.on_mouse_move,
+        'on_click': Callbacks.on_mouse_click,
+        'on_scroll': Callbacks.on_mouse_scroll
+    }
 
-    with keyboard.Listener(**keyboard_events) as keyboard_listener:
-        with mouse.Listener(**mouse_events) as mouse_listener:
-            try:
-                keyboard_listener.join()
-                mouse_listener.join()
-            except StopException as e:
-                print('ok?')
+    keyboard_events = {
+        'on_press': Callbacks.on_key_press,
+        'on_release': Callbacks.on_key_release
+    }
 
+    def __init__(self, excludes_events=None):
+        for exclude_event in excludes_events:
+            if exclude_event in self.mouse_events:
+                del self.mouse_events[exclude_event]
+            if exclude_event in self.keyboard_events:
+                del self.keyboard_events[exclude_event]
 
-if __name__ == '__main__':
-    pass
+    def listen(self):
+        with keyboard.Listener(**self.keyboard_events) as keyboard_listener:
+            with mouse.Listener(**self.mouse_events) as mouse_listener:
+                try:
+                    keyboard_listener.join()
+                    mouse_listener.join()
+                except StopException as e:
+                    print('stop')

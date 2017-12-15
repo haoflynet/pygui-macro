@@ -1,74 +1,60 @@
 import time
-from pynput import keyboard, mouse
+
+from pynput import keyboard
 
 from listener import StopException
 
-current_time = 0
-scripts = []
 
-
-def on_mouse_move(x, y):
-    print(x, y)
-
-
-def on_mouse_click(x, y, button, pressed):
+class Callbacks:
     """
-    549.4140625 550.96875 Button.left True
+    不同的监听方式仍然有相同的回调函数
     """
-    global scripts, current_time
-    scripts.append(' '.join(['MOUSE_MOVE', str(int(time.time()) - current_time), x, y]))
-    scripts.append(' '.join(['MOUSE_CLICK', '0', button]))
-    current_time = int(time.time())
-    print(x, y, button, pressed)
+    scripts = []
+    current_time = 0
 
+    @classmethod
+    def on_mouse_move(cls, x, y):
+        print(x, y)
 
-def on_mouse_scroll(x, y, dx, dy):
-    print(x, y, dx, dy)
+    @classmethod
+    def on_mouse_click(cls, x, y, button, pressed):
+        cls.scripts.append(' '.join(['MOUSE_MOVE', cls.get_and_update_time(), x, y]))
+        cls.scripts.append(' '.join(['MOUSE_CLICK', '0', button]))
 
+    @classmethod
+    def on_mouse_scroll(cls, x, y, dx, dy):
+        print(x, y, dx, dy)
 
-def on_key_press(key):
-    """
-    begin的时候设置当前时间
-    :param key:
-    :return:
-    """
-    global scripts
-    if '_name_' in key.__dict__:
-        char = key._name_
-    elif 'char' in key.__dict__:
-        char = key.char
-    else:
-        char = None
+    @classmethod
+    def on_key_press(cls, key):
+        if '_name_' in key.__dict__:
+            char = key._name_
+        elif 'char' in key.__dict__:
+            char = key.char
+        else:
+            char = None
+        cls.scripts.append(' '.join(['KEY_PRESS', cls.get_and_update_time(), 'None' if char is None else char]))
 
-    print(char)
+        if key == keyboard.Key.ecs:
+            raise StopException('stop')
 
-    global current_time
-    scripts.append(' '.join(['KEY_PRESS', str(int(time.time()) - current_time), 'None' if char is None else char]))
-    current_time = int(time.time())
+    @classmethod
+    def on_key_release(cls, key):
+        if '_name_' in key.__dict__:
+            char = key._name_
+        elif 'char' in key.__dict__:
+            char = key.char
+        else:
+            char = 'None'
 
-    if key == keyboard.Key.esc:
-        raise StopException('abc')
+        cls.scripts.append(' '.join(['KEY_RELEASE', cls.get_and_update_time(), 'None' if char is None else char]))
 
+    @classmethod
+    def get_and_update_time(cls):
+        difference = int(time.time()) - cls.current_time
+        cls.current_time = int(time.time())
+        return str(difference)
 
-def on_key_release(key):
-    global scripts
-    if '_name_' in key.__dict__:
-        char = key._name_
-    elif 'char' in key.__dict__:
-        char = key.char
-    else:
-        char = 'None'
-
-    global current_time
-    scripts.append(' '.join(['KEY_RELEASE', str(int(time.time()) - current_time), 'None' if char is None else char]))
-    current_time = int(time.time())
-
-
-def set_current_time():
-    global current_time
-    current_time = int(time.time())
-
-
-def get_scripts():
-    global scripts
-    return scripts
+    @classmethod
+    def get_scripts(cls):
+        return cls.scripts

@@ -1,42 +1,57 @@
+import codecs
+import os
+
 import time
 
-import controller
-
-original = (0, 0)
-
-actions = {
-    'KEY_PRESS': controller.key_press,
-    'KEY_RELEASE': controller.key_release,
-    'MOUSE_MOVE': controller.mouse_move,
-    'MOUSE_CLICK': controller.mouse_click,
-    'MOUSE_SCROLL': controller.mouse_scroll,
-}
+from controller import Controller
 
 
-def get_original():
-    """
-    获取初始坐标
-    :return:
-    """
-    global original
-    return original
+class Runner:
+    start_key = None
+    end_key = 'Esc'
+    file = 'script'
+    is_auto_release = False
+    scripts = []
+    original = (0, 0)
+    actions = {
+        'KEY_PRESS': Controller.key_press,
+        'KEY_RELEASE': Controller.key_release,
+        'MOUSE_MOVE': Controller.mouse_move,
+        'MOUSE_CLICK': Controller.mouse_click,
+        'MOUSE_SCROLL': Controller.mouse_scroll,
+    }
 
+    def __init__(self, start_key, end_key, file, is_auto_release):
+        if start_key is not None:
+            self.start_key = start_key
+        if end_key is not None:
+            self.end_key = end_key
+        if is_auto_release is not None:
+            self.is_auto_release = is_auto_release
+        if file is not None:
+            self.file = file
+            if not os.path.isfile(file):
+                print('file not found')
+                exit(0)
 
-def run(scripts):
-    start = False
-    for script in scripts:
-        if script[0] == ':ORIGINAL':
-            global original
-            original = (script[1], scripts[2])
-        if start is False and script[0] == ':START':
-            start = True
-        if start is False or len(script) <= 2:
-            continue
-        if script[0] == ':END':
-            break
+        fp = codecs.open(self.file, 'r', 'utf-8')
+        self.scripts = [line.split(' ') for line in fp.readlines()]
 
-        time.sleep(int(script[1]))
-        if script[-1] == '\n':
-            script = script[:-1]
+    def handle(self):
+        start = False
+        for script in self.scripts:
+            if script[0] == ':ORIGINAL':
+                global original
+                original = (script[1], self.scripts[2])
+            if start is False and script[0] == ':START':
+                start = True
+            if start is False or len(script) <= 2:
+                continue
+            if script[0] == ':END':
+                break
 
-        actions[script[0]](*script[2:])
+            time.sleep(int(script[1]))
+            if script[-1] == '\n':
+                script = script[:-1]
+
+            self.actions[script[0]](*script[2:])

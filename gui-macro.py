@@ -1,57 +1,11 @@
 """
 TODO： 手动编辑、if语句、while语句
 """
-import codecs
 import os
 import argparse
-import platform
 
-from listener import listen
-from runner import run
-from callbacks import get_scripts, set_current_time
-
-
-def write(scripts):
-    """
-    写入脚本文件
-    TODO: 加入SCREEN_SIZE
-    :return:
-    """
-    device_info = ':DEVICE: {} {}'.format(
-        platform.system(), platform.release()
-    )
-    scripts = [device_info, ':START'] + scripts + [':END']
-
-    fp = codecs.open('test', 'w', 'utf-8')
-    fp.write(' \n'.join(scripts))
-    fp.close()
-
-
-def record(start_key, end_key, exclude_events, destination, file, original, original_auto, is_continue):
-    start_key = None if start_key is None else start_key
-    end_key = 'Esc' if end_key is None else end_key
-    exclude_events = [] if exclude_events is None else exclude_events
-    destination = './' if destination is None else destination
-    file = 'script' if file is None else file
-    if not os.path.isdir(destination):
-        print('destination not exists')
-    original = (0, 0) if original is None else original
-    original_auto = False if original_auto is None else original_auto
-    is_continue = False if is_continue is None else is_continue
-
-    set_current_time()
-    listen(exclude_events)
-    write(get_scripts())
-
-
-def exec(start_key, end_key, file, is_auto_release):
-    start_key = None if start_key is None else start_key
-    end_key = 'Esc' if end_key is None else end_key
-    is_auto_release = False if is_auto_release is None else is_auto_release
-
-    fp = codecs.open('test', 'r', 'utf-8')
-    scripts = [line.split(' ') for line in fp.readlines()]
-    run(scripts)
+from recoder import Recoder
+from runner import Runner
 
 
 def main():
@@ -89,7 +43,10 @@ def main():
             print('You must have the root privileges.')
             parser.exit()
         kwargs.pop('version')
-        globals()[command](**kwargs)
+        if command == 'record':
+            Recoder(**kwargs).handle()
+        elif command == 'exec':
+            Runner(**kwargs).handle()
 
 
 if __name__ == '__main__':

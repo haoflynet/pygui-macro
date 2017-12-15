@@ -1,34 +1,34 @@
-import runner
-
 from pynput import keyboard, mouse
 
 
-keyboard_controller = keyboard.Controller()
-mouse_controller = mouse.Controller()
+class Controller:
+    original = (0, 0)
+    keyboard_controller = keyboard.Controller()
+    mouse_controller = mouse.Controller()
 
+    @classmethod
+    def mouse_move(cls, x, y):
+        _x, _y = cls.original
+        cls.mouse_controller.position = (_x + float(x), _y + int(y))
 
-def mouse_move(x, y):
-    _x, _y = runner.get_original()
-    mouse_controller.position = (_x + float(x), _y + int(y))
+    @classmethod
+    def mouse_click(cls, button, count=1):
+        cls.mouse_controller.click(mouse.Button.__dict__[button], count)
 
+    @classmethod
+    def mouse_scroll(cls, x, y, dx, dy):
+        pass
 
-def mouse_click(button, count=1):
-    mouse_controller.click(mouse.Button.__dict__[button], count)
+    @classmethod
+    def key_press(cls, key):
+        if key in keyboard.Key.__dict__:
+            cls.keyboard_controller.press(keyboard.Key[key])
+        else:
+            cls.keyboard_controller.press(key)
 
-
-def mouse_scroll(x, y, dx, dy):
-    pass
-
-
-def key_press(key):
-    if key in keyboard.Key.__dict__:
-        keyboard_controller.press(keyboard.Key[key])
-    else:
-        keyboard_controller.press(key)
-
-
-def key_release(key):
-    if key in keyboard.Key:
-        keyboard_controller.release(keyboard.Key[key])
-    else:
-        keyboard_controller.release(key)
+    @classmethod
+    def key_release(cls, key):
+        if key in keyboard.Key:
+            cls.keyboard_controller.release(keyboard.Key[key])
+        else:
+            cls.keyboard_controller.release(key)
