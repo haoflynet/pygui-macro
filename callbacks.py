@@ -1,6 +1,8 @@
 import time
 from pynput import keyboard, mouse
 
+from listener import StopException
+
 current_time = 0
 scripts = []
 
@@ -10,6 +12,13 @@ def on_mouse_move(x, y):
 
 
 def on_mouse_click(x, y, button, pressed):
+    """
+    549.4140625 550.96875 Button.left True
+    """
+    global scripts, current_time
+    scripts.append(' '.join(['MOUSE_MOVE', str(int(time.time()) - current_time), x, y]))
+    scripts.append(' '.join(['MOUSE_CLICK', '0', button]))
+    current_time = int(time.time())
     print(x, y, button, pressed)
 
 
@@ -38,7 +47,7 @@ def on_key_press(key):
     current_time = int(time.time())
 
     if key == keyboard.Key.esc:
-        return False
+        raise StopException('abc')
 
 
 def on_key_release(key):
