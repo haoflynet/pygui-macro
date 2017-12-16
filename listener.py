@@ -1,12 +1,7 @@
 
 from pynput import keyboard, mouse
 
-# import callbacks
-from callbacks import Callbacks
-
-
-class StopException(Exception):
-    pass
+from callbacks import Callbacks, StopException
 
 
 class Listener:

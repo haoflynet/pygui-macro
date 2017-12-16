@@ -2,7 +2,9 @@ import time
 
 from pynput import keyboard
 
-from listener import StopException
+
+class StopException(Exception):
+    pass
 
 
 class Callbacks:

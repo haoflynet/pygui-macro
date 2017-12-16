@@ -2,7 +2,7 @@ import codecs
 import os
 import platform
 
-# from callbacks import Callbacks
+from callbacks import Callbacks
 from listener import Listener
 
 
@@ -40,17 +40,17 @@ class Recoder:
     def handle(self):
         Listener(self.exclude_events).listen()
 
-    # def write(self):
-    #     """
-    #     写入脚本文件
-    #     TODO: 加入SCREEN_SIZE
-    #     :return:
-    #     """
-    #     device_info = ':DEVICE: {} {}'.format(
-    #         platform.system(), platform.release()
-    #     )
-    #     scripts = [device_info, ':START'] + Callbacks.get_scripts() + [':END']
-    #
-    #     fp = codecs.open('test', 'w', 'utf-8')
-    #     fp.write(' \n'.join(scripts))
-    #     fp.close()
+    def write(self):
+        """
+        写入脚本文件
+        TODO: 加入SCREEN_SIZE
+        :return:
+        """
+        device_info = ':DEVICE: {} {}'.format(
+            platform.system(), platform.release()
+        )
+        scripts = [device_info, ':START'] + Callbacks.get_scripts() + [':END']
+
+        fp = codecs.open('test', 'w', 'utf-8')
+        fp.write(' \n'.join(scripts))
+        fp.close()
