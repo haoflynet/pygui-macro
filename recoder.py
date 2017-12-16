@@ -9,20 +9,20 @@ from listener import Listener
 class Recoder:
     start_key = None
     end_key = 'Esc'
-    exclude_events = []
+    include_events = []
     destination = './'
     file = 'script'
     original = (0, 0)
     original_auto = False
     is_continue = False
 
-    def __init__(self, start_key, end_key, exclude_events, destination, file, original, original_auto, is_continue):
+    def __init__(self, start_key, end_key, include_events, destination, file, original, original_auto, is_continue):
         if start_key is not None:
             self.start_key = start_key
         if end_key is not None:
             self.end_key = end_key
-        if exclude_events is not None:
-            self.exclude_events = exclude_events
+        if include_events is not None:
+            self.include_events = include_events
         if destination is not None:
             self.destination = destination
             if not os.path.isdir(destination):
@@ -38,7 +38,7 @@ class Recoder:
             self.is_continue = is_continue
 
     def handle(self):
-        Listener(self.exclude_events).listen()
+        Listener(self.include_events).listen()
 
     def write(self):
         """
