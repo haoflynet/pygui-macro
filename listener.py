@@ -19,10 +19,11 @@ class Listener:
         'on_release': Callbacks.on_key_release
     }
 
+    auto_release = True
     listen_mouse_events = {}
     listen_keyboard_events = {}
 
-    def __init__(self, include_events=None):
+    def __init__(self, include_events=None, auto_release=True):
         for include_event in include_events:
             if include_event in self.all_mouse_events:
                 self.listen_mouse_events[include_event] = self.all_mouse_events[include_event]
