@@ -25,7 +25,7 @@ def main():
     parser_record.add_argument('-ar', '--auto_release', action='store_true', dest='auto_release', help='whether auto release the key (default: true)')
 
     parser_run = subparsers.add_parser('run', help='run the macro script')
-    parser_record.add_argument('-d', '--delay', dest='delay', help='delay time to run (default: 3)')
+    parser_run.add_argument('-d', '--delay', dest='delay', help='delay time to run (default: 3)')
     parser_run.add_argument('-f', '--file', dest='file', help='specify the macro script filename (default: script)')
 
     kwargs = vars(parser.parse_args())
