@@ -12,7 +12,7 @@ class Callbacks:
     不同的监听方式仍然有相同的回调函数
     """
     scripts = []
-    current_time = 0
+    current_time = int(time.time())
 
     @classmethod
     def on_mouse_move(cls, x, y):
@@ -20,8 +20,8 @@ class Callbacks:
 
     @classmethod
     def on_mouse_click(cls, x, y, button, pressed):
-        cls.scripts.append(' '.join(['MOUSE_MOVE', cls.get_and_update_time(), x, y]))
-        cls.scripts.append(' '.join(['MOUSE_CLICK', '0', button]))
+        cls.scripts.append(' '.join(['MOUSE_MOVE', cls.get_and_update_time(), str(x), str(y)]))
+        cls.scripts.append(' '.join(['MOUSE_CLICK', '0', button.name]))
 
     @classmethod
     def on_mouse_scroll(cls, x, y, dx, dy):
@@ -29,6 +29,9 @@ class Callbacks:
 
     @classmethod
     def on_key_press(cls, key):
+        if key == keyboard.Key.esc:
+            raise StopException('stop by esc')
+
         if '_name_' in key.__dict__:
             char = key._name_
         elif 'char' in key.__dict__:
@@ -36,9 +39,6 @@ class Callbacks:
         else:
             char = None
         cls.scripts.append(' '.join(['KEY_PRESS', cls.get_and_update_time(), 'None' if char is None else char]))
-
-        if key == keyboard.Key.ecs:
-            raise StopException('stop')
 
     @classmethod
     def on_key_release(cls, key):
