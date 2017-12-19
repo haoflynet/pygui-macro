@@ -42,6 +42,7 @@ class Recoder:
 
     def handle(self):
         Listener(self.include_events, self.auto_release).listen()
+        self.write()
 
     def write(self):
         """
@@ -53,7 +54,12 @@ class Recoder:
             platform.system(), platform.release()
         )
 
-        scripts = [device_info, 'True' if self.auto_release else 'False', ':START'] + Callbacks.get_scripts() + [':END']
+        scripts = [
+                      device_info,
+                      ':AUTO_RELEASE ' + ('True' if self.auto_release else 'False'),
+                      '',
+                      ':START'
+                  ] + Callbacks.get_scripts() + [':END', '']
 
         fp = codecs.open(os.path.join(self.destination, self.file), 'w', 'utf-8')
         fp.write(' \n'.join(scripts))
