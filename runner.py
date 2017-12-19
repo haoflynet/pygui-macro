@@ -10,7 +10,7 @@ class Runner:
     start_key = None
     end_key = 'Esc'
     file = 'script'
-    is_auto_release = False
+    is_auto_release = None
     scripts = []
     original = (0, 0)
     actions = {
@@ -40,6 +40,7 @@ class Runner:
     def handle(self):
         start = False
         for script in self.scripts:
+            print(' '.join(script))
             if script[0] == ':ORIGINAL':
                 global original
                 original = (script[1], self.scripts[2])
@@ -49,9 +50,14 @@ class Runner:
                 continue
             if script[0] == ':END':
                 break
+            if script[0] == ':AUTO_RELEASE':
+                self.is_auto_release = bool(script[1]) if self.is_auto_release is None else self.is_auto_release
+            if script[0][0] != ':':
+                time.sleep(int(script[1]))
+                if script[-1] == '\n':
+                    script = script[:-1]
 
-            time.sleep(int(script[1]))
-            if script[-1] == '\n':
-                script = script[:-1]
-
-            self.actions[script[0]](*script[2:])
+                if (script[0] == 'KEY_PRESS' or script[0] == 'MOUSE_CLICK') and self.is_auto_release is True:
+                    self.actions[script[0]](*script[2:], self.is_auto_release)
+                else:
+                    self.actions[script[0]](*script[2:])
