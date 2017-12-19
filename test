@@ -1,6 +1,0 @@
-:DEVICE: Darwin 17.3.0 
-:START 
-KEY_PRESS 0 a 
-KEY_RELEASE 0 a 
-KEY_PRESS 1 esc 
-:END
