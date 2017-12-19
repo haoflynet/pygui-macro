@@ -9,7 +9,7 @@ class Controller:
     @classmethod
     def mouse_move(cls, x, y):
         _x, _y = cls.original
-        cls.mouse_controller.position = (_x + float(x), _y + int(y))
+        cls.mouse_controller.position = (_x + float(x), _y + float(y))
 
     @classmethod
     def mouse_click(cls, button, count=1):
