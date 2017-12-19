@@ -1,34 +1,29 @@
 import codecs
-import os
 import platform
+
+import time
 
 from callbacks import Callbacks
 from listener import Listener
 
 
 class Recoder:
-    start_key = None
+    delay = 3
     end_key = 'Esc'
     include_events = []
-    destination = './'
     file = 'script'
     original = (0, 0)
     original_auto = False
     is_continue = False
     auto_release = True
 
-    def __init__(self, start_key, end_key, include_events, destination, file, original, original_auto, is_continue, auto_release):
-        if start_key is not None:
-            self.start_key = start_key
+    def __init__(self, delay, end_key, include_events, file, original, original_auto, is_continue, auto_release):
+        if delay is not None:
+            self.delay = int(delay)
         if end_key is not None:
             self.end_key = end_key
         if include_events is not None:
             self.include_events = include_events
-        if destination is not None:
-            self.destination = destination
-            if not os.path.isdir(destination):
-                print('the destination not exists: ' + destination)
-                exit(0)
         if file is not None:
             self.file = file
         if original is not None:
@@ -41,6 +36,7 @@ class Recoder:
             self.auto_release = auto_release
 
     def handle(self):
+        time.sleep(self.delay)
         Listener(self.include_events, self.auto_release).listen()
         self.write()
 
@@ -61,6 +57,6 @@ class Recoder:
                       ':START'
                   ] + Callbacks.get_scripts() + [':END', '']
 
-        fp = codecs.open(os.path.join(self.destination, self.file), 'w', 'utf-8')
+        fp = codecs.open(self.file, 'w', 'utf-8')
         fp.write(' \n'.join(scripts))
         fp.close()
