@@ -2,7 +2,7 @@ import platform
 
 from setuptools import setup, find_packages
 
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 
 requires = ['six', 'pynput']
 
@@ -19,7 +19,7 @@ setup(
     author='haoflynet',
     author_email='haoflynet@gmail.com',
     maintainer='haoflynet',
-    maintainer_email='haoflynet',
+    maintainer_email='haoflynet@gmail.com',
     url='https://github.com/haoflynet/pygui-macro',
     license='MIT',
     packages=find_packages(),
