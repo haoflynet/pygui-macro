@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "9d3afce17480b385878136b9977bebad7a9a331723fefefd697767a71d6b327e"
+            "sha256": "3fac0b64df22d047d7bc921ea8a8d255c15de0b8f305124f46b14f220e6fc905"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -27,6 +27,17 @@
         ]
     },
     "default": {
+        "e1839a8": {
+            "editable": true,
+            "path": "."
+        },
+        "pynput": {
+            "hashes": [
+                "sha256:456afa6f7793fbdcfb22c3026ecbb57c2f9c9addc95d5e2c0f659b0d1a84a2f4",
+                "sha256:ecf4eab29fe3bb3f1990b82b63e75f825686f7d2eddb49a84d01f3242ed030ee"
+            ],
+            "version": "==1.3.7"
+        },
         "pyobjc-core": {
             "hashes": [
                 "sha256:c6e1e489ee3667babaf7e93ffc8cb74436d811de9831182a7fdee06152f69e9d",

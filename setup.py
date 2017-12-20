@@ -27,7 +27,7 @@ setup(
     zip_safe=True,
     install_requires=requires,
     entry_points={
-        'console_script': [
+        'console_scripts': [
             'pygui-macro=pygui_macro.pygui_macro:main'
         ]
     }
