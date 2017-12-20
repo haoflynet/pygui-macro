@@ -1,6 +1,7 @@
 # pygui-macro
 
-Cross-platform gui macro command tool with pure python.
+Cross-platform gui macro command tool with python, automate your keyboard and mouse. You can use it to record keyboard and mouse action, and rerun it as a script.
+
 
 ### Support Events
 
