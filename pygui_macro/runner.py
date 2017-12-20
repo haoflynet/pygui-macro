@@ -3,7 +3,7 @@ import os
 
 import time
 
-from controller import Controller
+from pygui_macro.controller import Controller
 
 
 class Runner:

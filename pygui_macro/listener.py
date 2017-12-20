@@ -2,7 +2,7 @@ import six
 
 from pynput import keyboard, mouse
 
-from callbacks import Callbacks, StopException
+from pygui_macro.callbacks import Callbacks, StopException
 
 
 class Listener:

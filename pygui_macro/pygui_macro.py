@@ -1,8 +1,8 @@
 import os
 import argparse
 
-from recoder import Recoder
-from runner import Runner
+from pygui_macro.recoder import Recoder
+from pygui_macro.runner import Runner
 
 
 def main():

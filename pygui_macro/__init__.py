@@ -1,8 +1,4 @@
-import recoder
-import listener
-import callbacks
-import controller
-import runner
+from pygui_macro import recoder, listener, callbacks, controller, runner
 
 __all__ = [
     recoder,

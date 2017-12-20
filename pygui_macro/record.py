@@ -1,6 +1,3 @@
-from
-
-
 class AndroidEmulator:
     """
     模拟器窗口，请用纯黑背景

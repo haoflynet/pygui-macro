@@ -3,8 +3,8 @@ import platform
 
 import time
 
-from callbacks import Callbacks
-from listener import Listener
+from pygui_macro.callbacks import Callbacks
+from pygui_macro.listener import Listener
 
 
 class Recoder:
