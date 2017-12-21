@@ -28,7 +28,7 @@ class Callbacks:
 
     @classmethod
     def on_mouse_scroll(cls, x, y, dx, dy):
-        print(x, y, dx, dy)
+        cls.scripts.append(' '.join(['MOUSE_SCROLL', cls.get_and_update_time(), str(x), str(y), str(dx), str(dy)]))
 
     @classmethod
     def on_key_press(cls, key):

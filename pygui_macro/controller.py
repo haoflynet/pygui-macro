@@ -20,8 +20,10 @@ class Controller:
     @classmethod
     def mouse_release(cls, button):
         cls.mouse_controller.release(mouse.Button.__dict__[button])
+
+    @classmethod
     def mouse_scroll(cls, x, y, dx, dy):
-        pass
+        cls.mouse_controller.scroll(int(dx), int(dy))
 
     @classmethod
     def key_press(cls, key, is_auto_release=False):
