@@ -2,6 +2,8 @@
 
 Cross-platform gui macro command tool with python, automate your keyboard and mouse. You can use it to record keyboard and mouse action, and rerun it as a script.
 
+## Example
+![](http://ojccjqhmb.bkt.clouddn.com/pygui-macro-example.gif)
 
 ### Support Events
 
