@@ -22,7 +22,7 @@ def main():
     parser_record.add_argument('-ie', '--include_events', action='append', dest='include_events', help='which event be recorded (default: [])')
     parser_record.add_argument('-f', '--file', dest='file', help='macro script filename (default: script')
     parser_record.add_argument('-c', '--continue', action='store_true', dest='is_continue', help='continuee (default: false)')
-    parser_record.add_argument('-ar', '--auto_release', action='store_true', dest='auto_release', help='whether auto release the key (default: true)')
+    parser_record.add_argument('-ar', '--auto_release', action='store_true', dest='auto_release', help='whether auto release the key (default: false)')
 
     parser_run = subparsers.add_parser('run', help='run the macro script')
     parser_run.add_argument('-d', '--delay', dest='delay', help='delay time to run (default: 3)')

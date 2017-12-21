@@ -15,7 +15,7 @@ class Recoder:
     original = (0, 0)
     original_auto = False
     is_continue = False
-    auto_release = True
+    auto_release = False
 
     def __init__(self, delay, end_key, include_events, file, original, original_auto, is_continue, auto_release):
         if delay is not None:
@@ -28,13 +28,10 @@ class Recoder:
             self.file = file
         if original is not None:
             self.original = original
-        if original_auto is not None:
-            self.original_auto = original_auto
-        if is_continue is not None:
-            self.is_continue = is_continue
-        if auto_release is not None:
-            if auto_release in ['0', 'False', 'false']:
-                self.auto_release = False
+
+        self.original_auto = original_auto
+        self.is_continue = is_continue
+        self.auto_release = auto_release
 
     def handle(self):
         time.sleep(self.delay)
