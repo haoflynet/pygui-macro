@@ -17,6 +17,7 @@ class Runner:
         'KEY_RELEASE': Controller.key_release,
         'MOUSE_MOVE': Controller.mouse_move,
         'MOUSE_CLICK': Controller.mouse_click,
+        'MOUSE_RELEASE': Controller.mouse_release,
         'MOUSE_SCROLL': Controller.mouse_scroll,
     }
 

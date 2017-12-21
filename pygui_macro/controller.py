@@ -18,6 +18,8 @@ class Controller:
             cls.mouse_controller.release(mouse.Button.__dict__[button])
 
     @classmethod
+    def mouse_release(cls, button):
+        cls.mouse_controller.release(mouse.Button.__dict__[button])
     def mouse_scroll(cls, x, y, dx, dy):
         pass
 
