@@ -12,8 +12,12 @@ class Controller:
         cls.mouse_controller.position = (int(_x + float(x)), int(_y + float(y)))
 
     @classmethod
-    def mouse_click(cls, button, is_auto_release=False):
-        cls.mouse_controller.click(mouse.Button.__dict__[button], 1)
+    def mouse_click(cls, button, count=1):
+        cls.mouse_controller.click(mouse.Button.__dict__[button], count)
+
+    @classmethod
+    def mouse_press(cls, button, is_auto_release=False):
+        cls.mouse_controller.press(mouse.Button.__dict__[button])
         if is_auto_release:
             cls.mouse_controller.release(mouse.Button.__dict__[button])
 

@@ -22,7 +22,7 @@ class Callbacks:
     def on_mouse_click(cls, x, y, button, pressed):
         cls.scripts.append(' '.join(['MOUSE_MOVE', cls.get_and_update_time(), str(x), str(y)]))
         if pressed:
-            cls.scripts.append(' '.join(['MOUSE_CLICK', '0', button.name]))
+            cls.scripts.append(' '.join(['MOUSE_PRESS', '0', button.name]))
         else:
             cls.scripts.append(' '.join(['MOUSE_RELEASE', cls.get_and_update_time(), button.name]))
 
