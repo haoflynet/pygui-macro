@@ -33,7 +33,8 @@ class Recoder:
         if is_continue is not None:
             self.is_continue = is_continue
         if auto_release is not None:
-            self.auto_release = auto_release
+            if auto_release in ['0', 'False', 'false']:
+                self.auto_release = False
 
     def handle(self):
         time.sleep(self.delay)
