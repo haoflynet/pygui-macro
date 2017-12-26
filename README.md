@@ -75,7 +75,21 @@ Example
 sudo pygui-macro run
 ```
 
+## Platform limitations
+
+### Linux
+
+- `X server` must be running
+- The environment variable $DISPLAY must be set. Such as `DISPLAY=:0 /usr/bin/pygui-macro run`
+
+### Mac OSX
+
+`sudo` privileges is necessary.
+
+### Windows
+
 ## TODO
+
 - verify script
 - if statement
 - while statement
